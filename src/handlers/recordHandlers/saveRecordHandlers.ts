@@ -43,12 +43,12 @@ export const SaveRecordIntentHandler: Alexa.RequestHandler = {
   },
 };
 
-export const NoRecordHandler: Alexa.RequestHandler = {
+export const NoRecordIntentHandler: Alexa.RequestHandler = {
   canHandle(handlerInput: Alexa.HandlerInput) {
     const sessionAttributes: State =
       handlerInput.attributesManager.getSessionAttributes();
     return (
-      isIntent("NoRecordHandler")(handlerInput) &&
+      isIntent("NoRecordIntent")(handlerInput) &&
       sessionAttributes.state === STATES.SAVE
     );
   },

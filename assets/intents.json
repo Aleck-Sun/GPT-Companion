@@ -1,0 +1,102 @@
+{
+  "interactionModel": {
+      "languageModel": {
+          "invocationName": "gpt companion",
+          "intents": [
+              {
+                  "name": "AMAZON.CancelIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.HelpIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.StopIntent",
+                  "samples": []
+              },
+              {
+                  "name": "HelloWorldIntent",
+                  "slots": [],
+                  "samples": [
+                      "hello",
+                      "how are you",
+                      "say hi world",
+                      "say hi",
+                      "hi",
+                      "say hello world",
+                      "say hello"
+                  ]
+              },
+              {
+                  "name": "AMAZON.NavigateHomeIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AMAZON.FallbackIntent",
+                  "samples": []
+              },
+              {
+                  "name": "AskIntent",
+                  "slots": [
+                      {
+                          "name": "question",
+                          "type": "AMAZON.SearchQuery"
+                      }
+                  ],
+                  "samples": [
+                      "please {question}",
+                      "will you {question}",
+                      "can you {question}",
+                      "tell me {question}",
+                      "ask {question}",
+                      "gpt companion {question}",
+                      "chat gpt {question}",
+                      "Hi gpt companion {question}",
+                      "Ask GPT {question}"
+                  ]
+              },
+              {
+                  "name": "SaveRecordIntent",
+                  "slots": [
+                      {
+                          "name": "record_name",
+                          "type": "AMAZON.DE_FIRST_NAME"
+                      }
+                  ],
+                  "samples": [
+                      "save under {record_name}",
+                      "save record",
+                      "yes",
+                      "Yes save as {record_name}"
+                  ]
+              },
+              {
+                  "name": "NoRecordIntent",
+                  "slots": [],
+                  "samples": [
+                      "Don't save record",
+                      "No"
+                  ]
+              },
+              {
+                  "name": "ViewRecordIntent",
+                  "slots": [
+                      {
+                          "name": "record_name",
+                          "type": "AMAZON.DE_FIRST_NAME"
+                      }
+                  ],
+                  "samples": [
+                      "view saved records under {record_name}",
+                      "View past responses of {record_name}",
+                      "View records of {record_name}",
+                      "View past responses",
+                      "View records under {record_name}"
+                  ]
+              }
+          ],
+          "types": []
+      }
+  }
+}

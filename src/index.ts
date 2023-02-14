@@ -1,5 +1,7 @@
 import * as Alexa from "ask-sdk";
 import * as BasicHandler from "./handlers/basicHandlers";
+import * as recordHandler from "./handlers/recordHandlers/saveRecordHandlers";
+import { ViewRecordIntentHandler } from "./handlers/recordHandlers/viewRecordHandler";
 import { AskIntentHandler } from "./handlers/askHandlers/askHandler";
 
 import { DB_NAME } from "./constants/variables";
@@ -9,6 +11,9 @@ export const handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     BasicHandler.LaunchRequestHandler,
     AskIntentHandler,
+    ViewRecordIntentHandler,
+    recordHandler.SaveRecordIntentHandler,
+    recordHandler.NoRecordIntentHandler,
     BasicHandler.HelloIntentHandler,
     BasicHandler.CancelOrStopIntentHandler,
     BasicHandler.HelpIntentHandler,

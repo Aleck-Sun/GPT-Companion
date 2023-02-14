@@ -4,7 +4,7 @@ import { isIntent } from "../../helpers/alexaHelpers";
 import { State } from "../../models/state";
 import { Records } from "../../models/records";
 import { PHRASES } from "../../constants/phrases";
-import { STATES, NAME_SLOT } from "../../constants/variables";
+import { STATES, NAME_SLOT, START, END } from "../../constants/variables";
 
 export const ViewRecordIntentHandler: Alexa.RequestHandler = {
   canHandle(handlerInput: Alexa.HandlerInput) {
@@ -24,9 +24,13 @@ export const ViewRecordIntentHandler: Alexa.RequestHandler = {
     const recordName = Alexa.getSlotValue(requestEnvelope, NAME_SLOT) || "all";
     if (persistentAttributes[recordName]?.length) {
       speechOutput = `Here are the records under ${recordName}: `;
-      let i = 1;
-      for (const record in persistentAttributes[recordName]) {
-        speechOutput += `${i++}) ${record}`;
+      for (
+        let i = 0;
+        i < (persistentAttributes[recordName]?.length || 0);
+        i++
+      ) {
+        const record = persistentAttributes[recordName]?.[i];
+        speechOutput += `${i + 1}) ${record?.slice(START, END)} `;
       }
     }
 
