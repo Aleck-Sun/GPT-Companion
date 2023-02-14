@@ -1,7 +1,10 @@
 import * as Alexa from "ask-sdk";
 import { escapeXmlCharacters } from "ask-sdk";
 import { isIntent } from "../helpers/alexaHelpers";
+
+import { State } from "../models/state";
 import { PHRASES } from "../constants/phrases";
+import { STATES } from "../constants/variables";
 
 export const LaunchRequestHandler: Alexa.RequestHandler = {
   canHandle(handlerInput: Alexa.HandlerInput) {
@@ -11,11 +14,10 @@ export const LaunchRequestHandler: Alexa.RequestHandler = {
     );
   },
   handle(handlerInput: Alexa.HandlerInput) {
-    // const sessionAttributes: GameState = {
-    //   gameState: GAME_STATES.GAME_END_STATE,
-    //   score: START_SCORE,
-    // };
-    // handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+    const sessionAttributes: State = {
+      state: STATES.NONE,
+    };
+    handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
     return handlerInput.responseBuilder
       .speak(PHRASES.LAUNCH)
       .withShouldEndSession(false)
@@ -55,48 +57,38 @@ export const HelpIntentHandler: Alexa.RequestHandler = {
   },
 };
 
-// export const FallbackIntentHandler: Alexa.RequestHandler = {
-//   canHandle: isIntent(
-//     "AMAZON.FallbackIntent",
-//     "EndGameIntent",
-//     "RollDiceIntent",
-//     "SaveHighscoreIntent",
-//     "NoHighscoreIntent",
-//     "SetHighscoreNameIntent",
-//     "ViewTopHighscoresIntent"
-//   ),
-//   handle(handlerInput: Alexa.HandlerInput) {
-//     const sessionAttributes: GameState =
-//       handlerInput.attributesManager.getSessionAttributes();
-//     let speechOutput: string;
-//     switch (sessionAttributes.gameState) {
-//       case GAME_STATES.GAME_END_STATE: {
-//         speechOutput = PHRASES.NO_GAME_FALLBACK;
-//         break;
-//       }
-//       case GAME_STATES.GAME_START_STATE: {
-//         speechOutput = PHRASES.IN_GAME_FALLBACK;
-//         break;
-//       }
-//       case GAME_STATES.SAVE_HIGHSCORE_STATE: {
-//         speechOutput = PHRASES.SAVE_HIGHSCORE_FALLBACK;
-//         break;
-//       }
-//       case GAME_STATES.SET_HIGHSCORENAME_STATE: {
-//         speechOutput = PHRASES.ASK_HIGHSCORE_NAME;
-//         break;
-//       }
-//       default: {
-//         speechOutput = PHRASES.UNHANDLED_INTENT;
-//         break;
-//       }
-//     }
-//     return handlerInput.responseBuilder
-//       .speak(speechOutput)
-//       .withShouldEndSession(false)
-//       .getResponse();
-//   },
-// };
+export const FallbackIntentHandler: Alexa.RequestHandler = {
+  canHandle: isIntent(
+    "AMAZON.FallbackIntent",
+    "AskIntent",
+    "SaveRecordIntent",
+    "NoRecordIntent",
+    "ViewRecordIntent"
+  ),
+  handle(handlerInput: Alexa.HandlerInput) {
+    const sessionAttributes: State =
+      handlerInput.attributesManager.getSessionAttributes();
+    let speechOutput: string;
+    switch (sessionAttributes.state) {
+      case STATES.NONE: {
+        speechOutput = PHRASES.NO_SAVE;
+        break;
+      }
+      case STATES.SAVE: {
+        speechOutput = PHRASES.SAVE_PROGRESS;
+        break;
+      }
+      default: {
+        speechOutput = PHRASES.UNHANDLED_INTENT;
+        break;
+      }
+    }
+    return handlerInput.responseBuilder
+      .speak(speechOutput)
+      .withShouldEndSession(false)
+      .getResponse();
+  },
+};
 
 export const UnhandledIntent: Alexa.RequestHandler = {
   canHandle() {
