@@ -1,0 +1,31 @@
+{
+  "name": "gpt-companion",
+  "version": "1.0.0",
+  "description": "Chat GPT alexa skill",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "ask-sdk": "^2.12.1",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.12.1",
+    "ask-sdk-model": "^1.49.0",
+    "aws-cli": "0.0.2",
+    "openai": "^3.1.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "zip-webpack-plugin": "^4.0.1"
+  },
+  "scripts": {
+    "build": "tsc & webpack",
+    "deploy": "npm run build & aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:446768499273:function:gpt-companion --zip-file fileb://dist/index.js.zip"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleck-Sun/GPT-Companion.git"
+  },
+  "keywords": [
+    "alexa"
+  ],
+  "author": "Bowen Sun",
+  "license": "ISC"
+}
